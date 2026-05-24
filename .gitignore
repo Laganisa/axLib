@@ -1,0 +1,45 @@
+# Build artifacts
+build/
+temp/
+*.o
+*.a
+*.so
+*.elf
+*.bin
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Debug files
+*.dSYM/
+*.su
+*.gch
+*.pch
+
+# Object files and libraries
+*.lo
+*.la
+.libs/
+lib*.a
+lib*.la
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Dependencies
+*.d
+*.dep
+
+# Compiler output
+*.map
+
+# OS specific
+Thumbs.db
+.env
