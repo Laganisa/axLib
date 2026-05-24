@@ -56,7 +56,5 @@ help:
 	@echo ""
 	@echo "Overridable variables:"
 	@echo "  CROSS_COMPILE=aarch64-linux-gnu-"
-	@echo "  LIB_BASENAME=ax
-lib"
-	@echo "  CPPFLAGS='-Dax
-LIB_SYS_WRITE=...'"
+	@echo "  LIB_BASENAME=axlib"
+	@echo "  CPPFLAGS='-DaxLIB_SYS_WRITE=...'"
