@@ -7,7 +7,7 @@ SRC_DIR       := src
 INC_DIR       := include
 BUILD_DIR     ?= build
 OBJ_DIR       := $(BUILD_DIR)/obj
-LIB_BASENAME  ?= mylib
+LIB_BASENAME  ?= axlib
 LIB_NAME      := $(BUILD_DIR)/lib$(LIB_BASENAME).a
 
 SRCS          := $(wildcard $(SRC_DIR)/*.c)
@@ -56,5 +56,7 @@ help:
 	@echo ""
 	@echo "Overridable variables:"
 	@echo "  CROSS_COMPILE=aarch64-linux-gnu-"
-	@echo "  LIB_BASENAME=mylib"
-	@echo "  CPPFLAGS='-DMYLIB_SYS_WRITE=...'"
+	@echo "  LIB_BASENAME=ax
+lib"
+	@echo "  CPPFLAGS='-Dax
+LIB_SYS_WRITE=...'"
