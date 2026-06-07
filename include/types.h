@@ -19,9 +19,6 @@ typedef long ssize_t;
 typedef unsigned long uintptr_t;
 typedef long intptr_t;
 
-// 불리언 타입 형식 지정자 오류 고치기
-// typedef unsigned char bool;
-
 // NULL 정의
 #define NULL ((void *)0)
 
