@@ -11,4 +11,6 @@ char *axlib_strchr(const char *str, int c);
 // 문자 자르기
 void axlib_strslice(const char *src, char *dst, int start, int end);
 
+size_t strlen(const char *str);
+
 #endif

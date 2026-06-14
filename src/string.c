@@ -1,5 +1,6 @@
 #include "string.h"
 
+// 문자열 비교함수
 int axlib_strcmp(const char *s1, const char *s2)
 {
     while (*s1 && (*s1 == *s2))
@@ -25,6 +26,19 @@ char *axlib_strchr(const char *str, int c)
         return (char *)str;
 
     return NULL;
+}
+
+// 문자열 길이
+size_t strlen(const char *str)
+{
+    const char *p = str;
+
+    while (*p)
+    {
+        p++;
+    }
+
+    return (size_t)(p - str);
 }
 
 /*

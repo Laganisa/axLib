@@ -9,11 +9,11 @@
  */
 
 #ifndef axLIB_SYS_READ
-#define axLIB_SYS_READ 0
+#define axLIB_SYS_READ 7
 #endif
 
 #ifndef axLIB_SYS_WRITE
-#define axLIB_SYS_WRITE 1
+#define axLIB_SYS_WRITE 6
 #endif
 
 #ifndef axLIB_SYS_OPEN
@@ -21,11 +21,11 @@
 #endif
 
 #ifndef axLIB_SYS_CLOSE
-#define axLIB_SYS_CLOSE 3
+#define axLIB_SYS_CLOSE 11
 #endif
 
 #ifndef axLIB_SYS_EXIT
-#define axLIB_SYS_EXIT 4
+#define axLIB_SYS_EXIT 1
 #endif
 
 #ifndef axLIB_SYS_YIELD
