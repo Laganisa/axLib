@@ -17,13 +17,30 @@ static inline long do_syscall(long nr,
     register long x8 asm("x8") = nr;
 
     asm volatile(
+        "mov x8, %1\n"
         "svc #0"
         : "+r"(x0)
-        : "r"(x1), "r"(x2), "r"(x3), "r"(x4), "r"(x5), "r"(x8)
-        : "memory");
+        : "r"(nr)
+        : "x8", "memory");
 
     return x0;
 }
+
+/*
+static inline long do_syscall(long nr)
+{
+    register long x0 asm("x0") = 0;
+
+    asm volatile(
+        "mov x8, #123\n"
+        "svc #0\n"
+        : "+r"(x0)
+        :
+        : "x8", "memory");
+
+    return x0;
+}
+*/
 
 long axlib_syscall0(long nr)
 {
@@ -88,7 +105,4 @@ long axlib_yield(void)
 void axlib_exit(int status)
 {
     (void)axlib_syscall1(axLIB_SYS_EXIT, status);
-
-    for (;;) {
-    }
 }

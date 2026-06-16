@@ -34,6 +34,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "CC  $<"
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.S | $(OBJ_DIR)
+	@echo "AS  $<"
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
 $(LIB_NAME): $(OBJS) | $(BUILD_DIR)
 	@echo "AR  $@"
 	@echo "---------------------------------------"

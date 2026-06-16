@@ -55,4 +55,4 @@ static inline int axlib_is_error(long ret)
     return ret < 0;
 }
 
-#endif /* axLIB_KERNEL_H */
+#endif
