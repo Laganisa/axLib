@@ -4,14 +4,22 @@ AR            := $(CROSS_COMPILE)ar
 OBJDUMP       := $(CROSS_COMPILE)objdump
 
 SRC_DIR       := src
+ASM_DIR       := asm
 INC_DIR       := include
+
 BUILD_DIR     ?= build
 OBJ_DIR       := $(BUILD_DIR)/obj
+
 LIB_BASENAME  ?= axlib
 LIB_NAME      := $(BUILD_DIR)/lib$(LIB_BASENAME).a
 
-SRCS          := $(wildcard $(SRC_DIR)/*.c)
-OBJS          := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+CSRCS         := $(wildcard $(SRC_DIR)/*.c)
+ASRCS         := $(wildcard $(ASM_DIR)/*.S)
+
+COBJS         := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(CSRCS))
+AOBJS         := $(patsubst $(ASM_DIR)/%.S,$(OBJ_DIR)/%.o,$(ASRCS))
+
+OBJS          := $(COBJS) $(AOBJS)
 
 CPPFLAGS      += -I$(INC_DIR)
 CFLAGS        += -march=armv8-a -ffreestanding -fno-builtin -Wall -Wextra -O2
@@ -34,7 +42,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "CC  $<"
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.S | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(ASM_DIR)/%.S | $(OBJ_DIR)
 	@echo "AS  $<"
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
@@ -57,8 +65,3 @@ help:
 	@echo "  all   - build the static library"
 	@echo "  list  - show archive members and symbols"
 	@echo "  clean - remove build artifacts"
-	@echo ""
-	@echo "Overridable variables:"
-	@echo "  CROSS_COMPILE=aarch64-linux-gnu-"
-	@echo "  LIB_BASENAME=axlib"
-	@echo "  CPPFLAGS='-DaxLIB_SYS_WRITE=...'"

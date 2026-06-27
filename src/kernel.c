@@ -1,5 +1,6 @@
 #include "kernel.h"
 
+/*
 static inline long do_syscall(long nr,
                               long arg0,
                               long arg1,
@@ -17,30 +18,45 @@ static inline long do_syscall(long nr,
     register long x8 asm("x8") = nr;
 
     asm volatile(
-        "mov x8, %1\n"
-        "svc #0"
+        "" // 컴파일러에게 레지스터 사용 강제
         : "+r"(x0)
-        : "r"(nr)
-        : "x8", "memory");
-
-    return x0;
-}
-
-/*
-static inline long do_syscall(long nr)
-{
-    register long x0 asm("x0") = 0;
+        : "r"(x1),
+          "r"(x2),
+          "r"(x3),
+          "r"(x4),
+          "r"(x5),
+          "r"(x8)
+        : "memory");
 
     asm volatile(
-        "mov x8, #123\n"
-        "svc #0\n"
+        "svc #0"
         : "+r"(x0)
         :
-        : "x8", "memory");
+        : "memory");
 
     return x0;
 }
 */
+
+static inline long do_syscall(long nr, long arg0, long arg1, long arg2, long arg3, long arg4, long arg5)
+{
+    register long x0 asm("x0") = arg0;
+    register long x1 asm("x1") = arg1;
+    register long x2 asm("x2") = arg2;
+    register long x3 asm("x3") = arg3;
+    register long x4 asm("x4") = arg4;
+    register long x5 asm("x5") = arg5;
+    register long x8 asm("x8") = nr;
+
+    asm volatile(
+        "svc #0"
+        : "+r"(x0)                                             // 결과값은 x0로 받음
+        : "r"(x1), "r"(x2), "r"(x3), "r"(x4), "r"(x5), "r"(x8) // 입력들
+        : "memory"                                             // 메모리 변화가 있을 수 있음
+    );
+
+    return x0;
+}
 
 long axlib_syscall0(long nr)
 {

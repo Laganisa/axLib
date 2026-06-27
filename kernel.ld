@@ -1,14 +1,17 @@
-/* Linker script for kernel integration with static library
-   This script ensures no conflicts when linking with kernel code
+/*
+    Linker script for kernel integration with static library
+    This script ensures no conflicts when linking with kernel code
 */
 
 ENTRY(_start)
 
 SECTIONS
 {
-    /* Keep all input sections for the library
-       Prefix with .lib_ to avoid conflicts with kernel sections
+    /*
+        Keep all input sections for the library
+        Prefix with .lib_ to avoid conflicts with kernel sections
     */
+    
     .lib_text :
     {
         KEEP(*(.text))
@@ -46,6 +49,7 @@ SECTIONS
     }
 }
 
+/* 이거 뭐임? */
 /* Memory layout hints (customize based on your kernel layout)
 MEMORY
 {
