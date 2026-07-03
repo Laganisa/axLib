@@ -1,5 +1,9 @@
 #include "string.h"
 
+/*
+    문자열 처리 파일
+*/
+
 // 문자열 비교함수
 int axlib_strcmp(const char *s1, const char *s2)
 {
@@ -29,7 +33,7 @@ char *axlib_strchr(const char *str, int c)
 }
 
 // 문자열 길이
-size_t strlen(const char *str)
+size_t axlib_strlen(const char *str)
 {
     const char *p = str;
 
