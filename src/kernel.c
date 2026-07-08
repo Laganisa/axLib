@@ -1,5 +1,6 @@
 #include "kernel.h"
 
+// 임시로 막아둔거
 /*
 static inline long do_syscall(long nr,
                               long arg0,
@@ -36,6 +37,10 @@ static inline long do_syscall(long nr,
 
     return x0;
 }
+*/
+
+/*
+    커널과의 시스템 콜을 보내는 파일
 */
 
 static inline long do_syscall(long nr, long arg0, long arg1, long arg2, long arg3, long arg4, long arg5)
