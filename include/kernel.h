@@ -17,7 +17,7 @@
 #endif
 
 #ifndef axLIB_SYS_OPEN
-#define axLIB_SYS_OPEN 2
+#define axLIB_SYS_OPEN 10
 #endif
 
 #ifndef axLIB_SYS_CLOSE
@@ -30,6 +30,14 @@
 
 #ifndef axLIB_SYS_YIELD
 #define axLIB_SYS_YIELD 4
+#endif
+
+#ifndef axLIB_FM_CRATE
+#define axLIB_FM_CRATE 8
+#endif
+
+#ifndef axLIB_FM_DELETE
+#define axLIB_FM_DELETE 9
 #endif
 
 /*
