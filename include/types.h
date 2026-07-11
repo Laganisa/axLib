@@ -1,5 +1,5 @@
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef _TYPES_H_
+#define _TYPES_H_
 
 // 기본 데이터 타입 정의
 typedef unsigned char uint8_t;
@@ -12,12 +12,15 @@ typedef signed short int16_t;
 typedef signed int int32_t;
 typedef signed long long int64_t;
 
-typedef unsigned long size_t;
-typedef long ssize_t;
+typedef uint64_t size_t;
+typedef int64_t ssize_t;
 
 // 포인터 타입
-typedef unsigned long uintptr_t;
-typedef long intptr_t;
+typedef uint64_t uintptr_t;
+typedef int64_t intptr_t;
+
+// 여기서 쓸 타입들
+typedef uint8_t bool;
 
 // NULL 정의
 #define NULL ((void *)0)

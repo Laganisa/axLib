@@ -1,7 +1,7 @@
-#ifndef __STRING_H__
-#define __STRING_H__
+#ifndef _STRING_H_
+#define _STRING_H_
 
-#include "../include/types.h"
+#include "types.h"
 
 // 문자 비교
 int axlib_strcmp(const char *s1, const char *s2);

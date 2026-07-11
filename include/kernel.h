@@ -1,7 +1,7 @@
 #ifndef axLIB_KERNEL_H
 #define axLIB_KERNEL_H
 
-#include "../include/types.h"
+#include "types.h"
 
 /*
     커널 시스템 콜이랑 일치하게 수정하기(완)
@@ -32,12 +32,12 @@
 #define axLIB_SYS_YIELD 4
 #endif
 
-#ifndef axLIB_FM_CRATE
-#define axLIB_FM_CRATE 8
+#ifndef axLIB_SYS_FILE_CREAT
+#define axLIB_SYS_FILE_CREAT 8
 #endif
 
-#ifndef axLIB_FM_DELETE
-#define axLIB_FM_DELETE 9
+#ifndef axLIB_SYS_FILE_DELETE
+#define axLIB_SYS_FILE_DELETE 9
 #endif
 
 /*
@@ -56,9 +56,12 @@ long axlib_syscall6(long nr, long arg0, long arg1, long arg2, long arg3, long ar
 */
 long axlib_read(int fd, void *buf, size_t count);
 long axlib_write(int fd, const void *buf, size_t count);
-long axlib_open(const char *path, int flags, int mode);
+long axlib_open(const char *path, int flags);
 long axlib_close(int fd);
 long axlib_yield(void);
+long axlib_crate(const char *path, int mode);
+
+// 종료 시스템 콜
 void axlib_exit(int status) __attribute__((noreturn));
 
 /* 에러 체크 인라인 함수 */
