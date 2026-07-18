@@ -59,7 +59,7 @@ long axlib_write(int fd, const void *buf, size_t count);
 long axlib_open(const char *path, int flags);
 long axlib_close(int fd);
 long axlib_yield(void);
-long axlib_crate(const char *path, int mode);
+long axlib_creat(const char *path, int mode, uint32_t size);
 
 // 종료 시스템 콜
 void axlib_exit(int status) __attribute__((noreturn));

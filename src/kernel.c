@@ -108,9 +108,9 @@ long axlib_write(int fd, const void *buf, size_t count)
     return axlib_syscall3(axLIB_SYS_WRITE, fd, (long)buf, (long)count);
 }
 
-long axlib_creat(const char *path, int mode)
+long axlib_creat(const char *path, int mode, uint32_t size)
 {
-    return axlib_syscall2(axLIB_SYS_FILE_CREAT, (long)path, mode);
+    return axlib_syscall3(axLIB_SYS_FILE_CREAT, (long)path, mode, size);
 }
 
 long axlib_open(const char *path, int flags)
