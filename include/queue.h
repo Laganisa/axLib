@@ -1,5 +1,5 @@
-#ifndef _QUEUE_H_
-#define _QUEUE_H_
+#ifndef __LIB_QUEUE_H__
+#define __LIB_QUEUE_H__
 
 #include "types.h"
 

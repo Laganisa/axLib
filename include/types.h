@@ -1,5 +1,5 @@
-#ifndef _TYPES_H_
-#define _TYPES_H_
+#ifndef __LIB_TYPES_H__
+#define __LIB_TYPES_H__
 
 // 기본 데이터 타입 정의
 typedef unsigned char uint8_t;

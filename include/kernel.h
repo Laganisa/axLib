@@ -1,12 +1,7 @@
-#ifndef axLIB_KERNEL_H
-#define axLIB_KERNEL_H
+#ifndef __axLIB_KERNEL_H__
+#define __axLIB_KERNEL_H__
 
 #include "types.h"
-
-/*
-    커널 시스템 콜이랑 일치하게 수정하기(완)
-    나중에 추가하면 여기도 추가하기
-*/
 
 #ifndef axLIB_SYS_READ
 #define axLIB_SYS_READ 7
