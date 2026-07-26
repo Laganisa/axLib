@@ -1,44 +1,16 @@
-#ifndef axLIB_KERNEL_H
-#define axLIB_KERNEL_H
+#ifndef __axLIB_KERNEL_H__
+#define __axLIB_KERNEL_H__
 
-#include "../include/types.h"
+#include "types.h"
 
-/*
-    커널 시스템 콜이랑 일치하게 수정하기(완)
-    나중에 추가하면 여기도 추가하기
-*/
-
-#ifndef axLIB_SYS_READ
-#define axLIB_SYS_READ 7
-#endif
-
-#ifndef axLIB_SYS_WRITE
-#define axLIB_SYS_WRITE 6
-#endif
-
-#ifndef axLIB_SYS_OPEN
-#define axLIB_SYS_OPEN 10
-#endif
-
-#ifndef axLIB_SYS_CLOSE
-#define axLIB_SYS_CLOSE 11
-#endif
-
-#ifndef axLIB_SYS_EXIT
 #define axLIB_SYS_EXIT 1
-#endif
-
-#ifndef axLIB_SYS_YIELD
 #define axLIB_SYS_YIELD 4
-#endif
-
-#ifndef axLIB_FM_CRATE
-#define axLIB_FM_CRATE 8
-#endif
-
-#ifndef axLIB_FM_DELETE
-#define axLIB_FM_DELETE 9
-#endif
+#define axLIB_SYS_WRITE 6
+#define axLIB_SYS_READ 7
+#define axLIB_SYS_FILE_CREAT 8
+#define axLIB_SYS_FILE_DEL 9
+#define axLIB_SYS_OPEN 10
+#define axLIB_SYS_CLOSE 11
 
 /*
     시스템 콜 하위 인터페이스 (어셈블리 바인딩용)
@@ -56,9 +28,12 @@ long axlib_syscall6(long nr, long arg0, long arg1, long arg2, long arg3, long ar
 */
 long axlib_read(int fd, void *buf, size_t count);
 long axlib_write(int fd, const void *buf, size_t count);
-long axlib_open(const char *path, int flags, int mode);
+long axlib_open(const char *path, int flags);
 long axlib_close(int fd);
 long axlib_yield(void);
+long axlib_creat(const char *path, int mode, uint32_t size);
+
+// 종료 시스템 콜
 void axlib_exit(int status) __attribute__((noreturn));
 
 /* 에러 체크 인라인 함수 */
