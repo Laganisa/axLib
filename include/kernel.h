@@ -3,37 +3,14 @@
 
 #include "types.h"
 
-#ifndef axLIB_SYS_READ
-#define axLIB_SYS_READ 7
-#endif
-
-#ifndef axLIB_SYS_WRITE
-#define axLIB_SYS_WRITE 6
-#endif
-
-#ifndef axLIB_SYS_OPEN
-#define axLIB_SYS_OPEN 10
-#endif
-
-#ifndef axLIB_SYS_CLOSE
-#define axLIB_SYS_CLOSE 11
-#endif
-
-#ifndef axLIB_SYS_EXIT
 #define axLIB_SYS_EXIT 1
-#endif
-
-#ifndef axLIB_SYS_YIELD
 #define axLIB_SYS_YIELD 4
-#endif
-
-#ifndef axLIB_SYS_FILE_CREAT
+#define axLIB_SYS_WRITE 6
+#define axLIB_SYS_READ 7
 #define axLIB_SYS_FILE_CREAT 8
-#endif
-
-#ifndef axLIB_SYS_FILE_DELETE
-#define axLIB_SYS_FILE_DELETE 9
-#endif
+#define axLIB_SYS_FILE_DEL 9
+#define axLIB_SYS_OPEN 10
+#define axLIB_SYS_CLOSE 11
 
 /*
     시스템 콜 하위 인터페이스 (어셈블리 바인딩용)

@@ -1,44 +1,5 @@
 #include "kernel.h"
 
-// 임시로 막아둔거
-/*
-static inline long do_syscall(long nr,
-                              long arg0,
-                              long arg1,
-                              long arg2,
-                              long arg3,
-                              long arg4,
-                              long arg5)
-{
-    register long x0 asm("x0") = arg0;
-    register long x1 asm("x1") = arg1;
-    register long x2 asm("x2") = arg2;
-    register long x3 asm("x3") = arg3;
-    register long x4 asm("x4") = arg4;
-    register long x5 asm("x5") = arg5;
-    register long x8 asm("x8") = nr;
-
-    asm volatile(
-        "" // 컴파일러에게 레지스터 사용 강제
-        : "+r"(x0)
-        : "r"(x1),
-          "r"(x2),
-          "r"(x3),
-          "r"(x4),
-          "r"(x5),
-          "r"(x8)
-        : "memory");
-
-    asm volatile(
-        "svc #0"
-        : "+r"(x0)
-        :
-        : "memory");
-
-    return x0;
-}
-*/
-
 /*
     커널과의 시스템 콜을 보내는 파일
 */
