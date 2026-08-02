@@ -69,7 +69,7 @@ long axlib_write(int fd, const void *buf, size_t count)
     return axlib_syscall3(axLIB_SYS_WRITE, fd, (long)buf, (long)count);
 }
 
-long axlib_creat(const char *path, int mode, uint32_t size)
+long axlib_file_creat(const char *path, int mode, uint32_t size)
 {
     return axlib_syscall3(axLIB_SYS_FILE_CREAT, (long)path, mode, size);
 }
@@ -92,4 +92,14 @@ long axlib_yield(void)
 void axlib_exit(int status)
 {
     (void)axlib_syscall1(axLIB_SYS_EXIT, status);
+}
+
+void axlib_send(uint8_t *data, uint8_t id, uint8_t len, uint16_t type)
+{
+    axlib_syscall4(axLIB_SYS_SEND_L2, data, id, len, type);
+}
+
+void axlib_setup(uint64_t *buf, uint8_t rule)
+{
+    axlib_syscall2(axLIB_SYS_SETUP, buf, rule);
 }
