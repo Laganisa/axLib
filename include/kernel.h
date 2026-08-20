@@ -16,13 +16,13 @@
 
 // File System Call (8 ~ 15)
 
-#define axLIB_SYS_FILE_CREAT 8
-#define axLIB_SYS_FILE_DEL 9
-#define axLIB_SYS_OPEN 10
-#define axLIB_SYS_CLOSE 11
-#define axLIB_SYS_RESERVED12 12
-#define axLIB_SYS_DIR_CREAT 13
-#define axLIB_SYS_DIR_DEL 14
+#define axLIB_SYS_OPEN 8
+#define axLIB_SYS_CLOSE 9
+#define axLIB_SYS_FILE_CREAT 10
+#define axLIB_SYS_FILE_DEL 11
+#define axLIB_SYS_DIR_CREAT 12
+#define axLIB_SYS_DIR_DEL 13
+#define axLIB_SYS_RESERVED12 14
 #define axLIB_SYS_RESERVED15 15
 
 // Process System Call (16 ~ 23)
@@ -78,7 +78,7 @@ void axlib_exit(int status) __attribute__((noreturn));
 
 void axlib_setup(uint64_t *buf, uint8_t rule);
 long axlib_yield(void);
-long axlib_read(int fd, void *buf, size_t count);
+long axlib_read(int fd, void *buf, size_t count, uint32_t offset);
 long axlib_write(int fd, const void *buf, size_t count);
 
 // File System Call (8 ~ 15)

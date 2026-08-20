@@ -24,6 +24,8 @@ static inline long do_syscall(long nr, long arg0, long arg1, long arg2, long arg
     return x0;
 }
 
+#pragma region syscallnum
+
 long axlib_syscall0(long nr)
 {
     return do_syscall(nr, 0, 0, 0, 0, 0, 0);
@@ -58,10 +60,11 @@ long axlib_syscall6(long nr, long arg0, long arg1, long arg2, long arg3, long ar
 {
     return do_syscall(nr, arg0, arg1, arg2, arg3, arg4, arg5);
 }
+#pragma endregion
 
-long axlib_read(int fd, void *buf, size_t count)
+long axlib_read(int fd, void *buf, size_t count, uint32_t offset)
 {
-    return axlib_syscall3(axLIB_SYS_READ, fd, (long)buf, (long)count);
+    return axlib_syscall4(axLIB_SYS_READ, fd, (long)buf, (long)count, (uint32_t)offset);
 }
 
 long axlib_write(int fd, const void *buf, size_t count)
