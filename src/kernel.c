@@ -62,22 +62,34 @@ long axlib_syscall6(long nr, long arg0, long arg1, long arg2, long arg3, long ar
 }
 #pragma endregion
 
-long axlib_read(int fd, void *buf, size_t count, uint32_t offset)
+long axlib_read(
+    int fd,
+    void *buf,
+    size_t count,
+    uint32_t offset)
 {
     return axlib_syscall4(axLIB_SYS_READ, fd, (long)buf, (long)count, (uint32_t)offset);
 }
 
-long axlib_write(int fd, const void *buf, size_t count)
+long axlib_write(
+    int fd,
+    const void *buf,
+    size_t count)
 {
     return axlib_syscall3(axLIB_SYS_WRITE, fd, (long)buf, (long)count);
 }
 
-long axlib_file_creat(const char *path, int mode, uint32_t size)
+long axlib_file_creat(
+    const char *path,
+    int mode,
+    uint32_t size)
 {
     return axlib_syscall3(axLIB_SYS_FILE_CREAT, (long)path, mode, size);
 }
 
-long axlib_open(const char *path, int flags)
+long axlib_open(
+    const char *path,
+    int flags)
 {
     return axlib_syscall2(axLIB_SYS_OPEN, (long)path, flags);
 }
@@ -97,12 +109,33 @@ void axlib_exit(int status)
     (void)axlib_syscall1(axLIB_SYS_EXIT, status);
 }
 
-void axlib_send(uint8_t *data, uint8_t id, uint8_t len, uint16_t type)
+void axlib_ipc_send(
+    uint8_t *data,
+    uint8_t len,
+    uint8_t towho)
 {
-    axlib_syscall4(axLIB_SYS_SEND_L2, data, id, len, type);
+    axlib_syscall3(axLIB_SYS_IPC_SEND, data, len, towho);
 }
 
-void axlib_setup(uint64_t *buf, uint8_t rule)
+void axlib_ipc_rece(
+    uint8_t *data)
+{
+    axlib_syscall1(axLIB_SYS_IPC_RECE, data);
+}
+
+void axlib_l2_send(
+    uint8_t *data,
+    uint8_t id,
+    uint8_t len,
+    uint16_t type)
+{
+
+    axlib_syscall4(axLIB_SYS_L2_SEND, data, id, len, type);
+}
+
+void axlib_setup(
+    uint64_t *buf,
+    uint8_t rule)
 {
     axlib_syscall2(axLIB_SYS_SETUP, buf, rule);
 }

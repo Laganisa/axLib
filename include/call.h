@@ -15,4 +15,12 @@ void file_close(int fd);
 void kernel_setup(uint8_t *buf, uint8_t rule);
 void net_send(uint8_t *data, uint8_t id, uint8_t len, uint16_t type);
 
+void ipc_send(
+    uint8_t *data,
+    uint8_t len,
+    uint8_t towho);
+
+void ipc_rece(
+    uint8_t *data);
+
 #endif

@@ -253,10 +253,24 @@ void file_close(int fd)
 
 void net_send(uint8_t *data, uint8_t id, uint8_t len, uint16_t type)
 {
-    axlib_send(data, id, len, type);
+    axlib_l2_send(data, id, len, type);
 }
 
 void kernel_setup(uint8_t *buf, uint8_t rule)
 {
     axlib_setup(buf, rule);
+}
+
+void ipc_send(
+    uint8_t *data,
+    uint8_t len,
+    uint8_t towho)
+{
+    axlib_ipc_send(data, len, towho);
+}
+
+void ipc_rece(
+    uint8_t *data)
+{
+    axlib_ipc_rece(data);
 }
