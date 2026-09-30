@@ -104,6 +104,11 @@ long axlib_yield(void)
     return axlib_syscall0(axLIB_SYS_YIELD);
 }
 
+void *axlib_sbrk(size_t increment)
+{
+    return (void *)axlib_syscall1(axLIB_SYS_BRK, (long)increment);
+}
+
 void axlib_exit(int status)
 {
     (void)axlib_syscall1(axLIB_SYS_EXIT, status);

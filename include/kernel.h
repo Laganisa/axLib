@@ -8,7 +8,7 @@
 #define axLIB_SYS_RESERVED0 0
 #define axLIB_SYS_EXIT 1
 #define axLIB_SYS_ABORT 2
-#define axLIB_SYS_LOAD 3
+#define axLIB_SYS_BRK 3
 #define axLIB_SYS_YIELD 4
 #define axLIB_SYS_SETUP 5
 #define axLIB_SYS_WRITE 6
@@ -78,6 +78,9 @@ void axlib_exit(int status) __attribute__((noreturn));
 
 void axlib_setup(uint64_t *buf, uint8_t rule);
 long axlib_yield(void);
+void *axlib_sbrk(size_t increment);
+void *axlib_malloc(size_t size);
+void axlib_free(void *ptr);
 long axlib_read(int fd, void *buf, size_t count, uint32_t offset);
 long axlib_write(int fd, const void *buf, size_t count);
 
