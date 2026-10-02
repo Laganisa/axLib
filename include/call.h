@@ -7,7 +7,8 @@
 #define STDIO 0
 
 void write(int fd, const int8_t *format, const int64_t *text);
-void read(int fd, char *buf, size_t size);
+// Returns consumed input bytes, including a line terminator; zero indicates EOF.
+long read(int fd, char *buf, size_t size);
 void file_creat(const char *path, const char *mode, uint32_t size);
 long file_open(const char *path, char mod, uint8_t is_dev);
 void file_close(int fd);

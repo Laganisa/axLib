@@ -153,7 +153,7 @@ void write(int fd, const int8_t *format, const int64_t *text)
 /*
     범용 읽기 함수
 */
-void read(int fd, char *buf, size_t size)
+long read(int fd, char *buf, size_t size)
 {
     if (!buf || size == 0)
     {
@@ -161,6 +161,7 @@ void read(int fd, char *buf, size_t size)
     }
 
     size_t used = 0;
+    size_t consumed = 0;
 
     while (used < size - 1)
     {
@@ -171,9 +172,9 @@ void read(int fd, char *buf, size_t size)
             return ret;
 
         if (ret == 0)
-            // 데이터 없음, 계속 대기
-            // ? 나중에 양보 함수 만들 예정
-            continue;
+            break;
+
+        consumed++;
 
         if (ch == '\n' || ch == '\r')
             break;
@@ -182,7 +183,7 @@ void read(int fd, char *buf, size_t size)
     }
 
     buf[used] = '\0';
-    return (long)used;
+    return (long)consumed;
 }
 
 /*

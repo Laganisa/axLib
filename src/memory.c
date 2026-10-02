@@ -1,4 +1,66 @@
 #include "kernel.h"
+#include "memory.h"
+
+void *axlib_memset(void *dest, int value, size_t count)
+{
+    uint8_t *bytes = (uint8_t *)dest;
+    for (size_t i = 0; i < count; i++)
+    {
+        bytes[i] = (uint8_t)value;
+    }
+    return dest;
+}
+
+void *axlib_memcpy(void *dest, const void *src, size_t count)
+{
+    uint8_t *dest_bytes = (uint8_t *)dest;
+    const uint8_t *src_bytes = (const uint8_t *)src;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        dest_bytes[i] = src_bytes[i];
+    }
+    return dest;
+}
+
+void *axlib_memmove(void *dest, const void *src, size_t count)
+{
+    uint8_t *dest_bytes = (uint8_t *)dest;
+    const uint8_t *src_bytes = (const uint8_t *)src;
+    uintptr_t dest_addr = (uintptr_t)dest;
+    uintptr_t src_addr = (uintptr_t)src;
+
+    if (dest_addr <= src_addr || dest_addr - src_addr >= count)
+    {
+        for (size_t i = 0; i < count; i++)
+        {
+            dest_bytes[i] = src_bytes[i];
+        }
+    }
+    else
+    {
+        for (size_t i = count; i > 0; i--)
+        {
+            dest_bytes[i - 1] = src_bytes[i - 1];
+        }
+    }
+    return dest;
+}
+
+int axlib_memcmp(const void *lhs, const void *rhs, size_t count)
+{
+    const uint8_t *lhs_bytes = (const uint8_t *)lhs;
+    const uint8_t *rhs_bytes = (const uint8_t *)rhs;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        if (lhs_bytes[i] != rhs_bytes[i])
+        {
+            return (int)lhs_bytes[i] - (int)rhs_bytes[i];
+        }
+    }
+    return 0;
+}
 
 typedef struct axlib_heap_block_t
 {
