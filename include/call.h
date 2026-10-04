@@ -6,7 +6,7 @@
 // 입출력 디스크럽터 위치
 #define STDIO 0
 
-void write(int fd, const int8_t *format, const int64_t *text);
+void write(int fd, const char *format, ...);
 // Returns consumed input bytes, including a line terminator; zero indicates EOF.
 long read(int fd, char *buf, size_t size);
 void file_creat(const char *path, const char *mode, uint32_t size);

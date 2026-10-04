@@ -1,8 +1,9 @@
 #include "call.h"
 #include "string.h"
 #include "kernel.h"
+#include <stdarg.h>
 
-static int file_chg_auth(uint8_t *auth)
+static int file_chg_auth(const char *auth)
 {
     // 크기가 4바이트를 만족시키지 못하면 리턴하기
     if (axlib_strlen(auth) != 4)
@@ -30,129 +31,135 @@ static int file_chg_auth(uint8_t *auth)
     %s : 문자열
     %c : 문자
 */
-void write(int fd, const int8_t *format, const int64_t *text)
+void write(int fd, const char *format, ...)
 {
-    // fd 하한 검사
-    if (fd < 0)
+    if (fd < 0 || format == NULL)
     {
         return;
     }
 
+    va_list write_args;
+    va_start(write_args, format);
+
     // 10진 정수 (%d)
     if (axlib_strcmp(format, "%d") == 0)
     {
-        int64_t n = (int64_t)text; // 만약 주소가 아니라 값 자체를 캐스팅하는 구조라면 유지
+        int64_t n = va_arg(write_args, int);
 
         if (n == 0)
         {
-            axlib_write(fd, "0", 1); // 0번 fd가 아니라 인자로 받은 fd 사용
-            return;
+            axlib_write(fd, "0", 1);
         }
-
-        char buf[24];
-        int i = 0;
-        int is_negative = 0;
-
-        if (n < 0)
+        else
         {
-            is_negative = 1;
-            n = -n;
+            char write_number_buffer[24];
+            char write_output_buffer[24];
+            uint64_t write_magnitude = n < 0
+                                           ? (uint64_t)(-(n + 1)) + 1
+                                           : (uint64_t)n;
+            int write_number_length = 0;
+
+            while (write_magnitude > 0)
+            {
+                write_number_buffer[write_number_length++] =
+                    (char)(write_magnitude % 10) + '0';
+                write_magnitude /= 10;
+            }
+
+            int write_output_length = 0;
+            if (n < 0)
+            {
+                write_output_buffer[write_output_length++] = '-';
+            }
+            while (write_number_length > 0)
+            {
+                write_output_buffer[write_output_length++] =
+                    write_number_buffer[--write_number_length];
+            }
+
+            axlib_write(fd, write_output_buffer, write_output_length);
         }
-
-        while (n > 0)
-        {
-            buf[i++] = (n % 10) + '0';
-            n /= 10;
-        }
-
-        if (is_negative)
-            buf[i++] = '-';
-
-        char out[24];
-        int out_len = 0;
-        for (int j = 0; j < i; j++)
-        {
-            out[out_len++] = buf[i - 1 - j];
-        }
-        out[out_len] = '\0';
-
-        axlib_write(fd, out, out_len);
     }
     // 부호 없는 10진 정수 (%u)
     else if (axlib_strcmp(format, "%u") == 0)
     {
-        uint64_t n = (uint64_t)text;
+        uint64_t n = va_arg(write_args, unsigned int);
         if (n == 0)
         {
             axlib_write(fd, "0", 1);
-            return;
         }
-
-        char buf[24];
-        int i = 0;
-        while (n > 0)
+        else
         {
-            buf[i++] = (n % 10) + '0';
-            n /= 10;
-        }
+            char write_number_buffer[24];
+            char write_output_buffer[24];
+            int write_number_length = 0;
 
-        char out[24];
-        int out_len = 0;
-        for (int j = 0; j < i; j++)
-        {
-            out[out_len++] = buf[i - 1 - j];
-        }
-        out[out_len] = '\0';
+            while (n > 0)
+            {
+                write_number_buffer[write_number_length++] =
+                    (char)(n % 10) + '0';
+                n /= 10;
+            }
 
-        axlib_write(fd, out, out_len);
+            int write_output_length = 0;
+            while (write_number_length > 0)
+            {
+                write_output_buffer[write_output_length++] =
+                    write_number_buffer[--write_number_length];
+            }
+            axlib_write(fd, write_output_buffer, write_output_length);
+        }
     }
     // 16진수 정수 (%x)
     else if (axlib_strcmp(format, "%x") == 0)
     {
-        uint32_t n = (uint32_t)text;
+        uint32_t n = va_arg(write_args, unsigned int);
         if (n == 0)
         {
             axlib_write(fd, "0", 1);
-            return;
         }
-
-        char buf[16];
-        int i = 0;
-        char hex_chars[] = "0123456789ABCDEF";
-
-        while (n > 0)
+        else
         {
-            buf[i++] = hex_chars[n % 16];
-            n /= 16;
-        }
+            char write_number_buffer[16];
+            char write_output_buffer[16];
+            int write_number_length = 0;
+            const char write_hex_digits[] = "0123456789ABCDEF";
 
-        char out[16];
-        int out_len = 0;
-        for (int j = 0; j < i; j++)
-        {
-            out[out_len++] = buf[i - 1 - j];
-        }
-        out[out_len] = '\0';
+            while (n > 0)
+            {
+                write_number_buffer[write_number_length++] =
+                    write_hex_digits[n % 16];
+                n /= 16;
+            }
 
-        axlib_write(fd, out, out_len);
+            int write_output_length = 0;
+            while (write_number_length > 0)
+            {
+                write_output_buffer[write_output_length++] =
+                    write_number_buffer[--write_number_length];
+            }
+            axlib_write(fd, write_output_buffer, write_output_length);
+        }
     }
     // 문자열 (%s)
     else if (axlib_strcmp(format, "%s") == 0)
     {
-        char *s = (char *)text;
-        axlib_write(fd, s, axlib_strlen(s)); // fd 수정
+        const char *write_text = va_arg(write_args, const char *);
+        if (write_text != NULL)
+        {
+            axlib_write(fd, write_text, axlib_strlen(write_text));
+        }
     }
     // 문자 (%c)
     else if (axlib_strcmp(format, "%c") == 0)
     {
-        char c = (char)text;
-        axlib_write(fd, &c, 1); // 문자의 주소(&c)를 넘기도록 수정
+        char write_character = (char)va_arg(write_args, int);
+        axlib_write(fd, &write_character, 1);
     }
+
+    va_end(write_args);
 }
 
-/*
-    범용 읽기 함수
-*/
 long read(int fd, char *buf, size_t size)
 {
     if (!buf || size == 0)
@@ -160,30 +167,28 @@ long read(int fd, char *buf, size_t size)
         return -1;
     }
 
-    size_t used = 0;
-    size_t consumed = 0;
-
-    while (used < size - 1)
+    if (size == 1)
     {
-        char ch;
-        long ret = axlib_read(fd, &ch, 1, 0);
+        buf[0] = '\0';
+        return 0;
+    }
 
-        if (ret < 0)
-            return ret;
+    long ret = axlib_read(fd, buf, size - 1, 0);
+    if (ret < 0)
+    {
+        return ret;
+    }
 
-        if (ret == 0)
-            break;
+    size_t used = (size_t)ret;
 
-        consumed++;
-
-        if (ch == '\n' || ch == '\r')
-            break;
-
-        buf[used++] = ch;
+    while (used > 0 && (buf[used - 1] == '\n' || buf[used - 1] == '\r'))
+    {
+        used--;
     }
 
     buf[used] = '\0';
-    return (long)consumed;
+
+    return ret;
 }
 
 /*
@@ -259,7 +264,7 @@ void net_send(uint8_t *data, uint8_t id, uint8_t len, uint16_t type)
 
 void kernel_setup(uint8_t *buf, uint8_t rule)
 {
-    axlib_setup(buf, rule);
+    axlib_setup((uint64_t *)buf, rule);
 }
 
 void ipc_send(
