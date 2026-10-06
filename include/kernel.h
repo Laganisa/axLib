@@ -18,7 +18,7 @@
 
 #define axLIB_SYS_OPEN 8
 #define axLIB_SYS_CLOSE 9
-#define axLIB_SYS_FILE_CREAT 10
+#define axLIB_SYS_FILE_CREATE 10
 #define axLIB_SYS_FILE_DEL 11
 #define axLIB_SYS_DIR_CREAT 12
 #define axLIB_SYS_DIR_DEL 13
@@ -86,7 +86,7 @@ long axlib_write(int fd, const void *buf, size_t count);
 
 // File System Call (8 ~ 15)
 
-long axlib_file_creat(const char *path, int mode, uint32_t size);
+long axlib_file_create(const char *path, int mode, uint32_t size);
 long axlib_open(const char *path, int flags);
 long axlib_close(int fd);
 

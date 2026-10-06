@@ -79,12 +79,12 @@ long axlib_write(
     return axlib_syscall3(axLIB_SYS_WRITE, fd, (long)buf, (long)count);
 }
 
-long axlib_file_creat(
+long axlib_file_create(
     const char *path,
     int mode,
     uint32_t size)
 {
-    return axlib_syscall3(axLIB_SYS_FILE_CREAT, (long)path, mode, size);
+    return axlib_syscall3(axLIB_SYS_FILE_CREATE, (long)path, mode, size);
 }
 
 long axlib_open(

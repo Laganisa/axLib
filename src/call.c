@@ -194,9 +194,9 @@ long read(int fd, char *buf, size_t size)
 /*
 
 */
-void file_creat(const char *path, const char *mode, uint32_t size)
+void file_create(const char *path, const char *mode, uint32_t size)
 {
-    axlib_file_creat(path, file_chg_auth(mode), size);
+    axlib_file_create(path, file_chg_auth(mode), size);
 }
 
 /*
