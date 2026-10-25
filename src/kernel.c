@@ -119,13 +119,13 @@ void axlib_ipc_send(
     uint8_t len,
     uint8_t towho)
 {
-    axlib_syscall3(axLIB_SYS_IPC_SEND, data, len, towho);
+    axlib_syscall3(axLIB_SYS_IPC_SEND, (long)data, len, towho);
 }
 
 void axlib_ipc_rece(
     uint8_t *data)
 {
-    axlib_syscall1(axLIB_SYS_IPC_RECE, data);
+    axlib_syscall1(axLIB_SYS_IPC_RECE, (long)data);
 }
 
 void axlib_l2_send(
@@ -135,12 +135,12 @@ void axlib_l2_send(
     uint16_t type)
 {
 
-    axlib_syscall4(axLIB_SYS_L2_SEND, data, id, len, type);
+    axlib_syscall4(axLIB_SYS_L2_SEND, (long)data, id, len, type);
 }
 
 void axlib_setup(
     uint64_t *buf,
     uint8_t rule)
 {
-    axlib_syscall2(axLIB_SYS_SETUP, buf, rule);
+    axlib_syscall2(axLIB_SYS_SETUP, (long)buf, rule);
 }
