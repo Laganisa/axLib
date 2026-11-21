@@ -28,6 +28,10 @@ static int file_chg_auth(const char *auth)
     %d : 10진 정수
     %u : 부호없는 10진 정수
     %x : 16진수 정수
+    %lld : 64비트 부호 있는 10진 정수
+    %llu : 64비트 부호 없는 10진 정수
+    %llx : 64비트 16진수 정수
+    %p : 포인터 주소
     %s : 문자열
     %c : 문자
 */
@@ -140,6 +144,113 @@ void write(int fd, const char *format, ...)
             }
             axlib_write(fd, write_output_buffer, write_output_length);
         }
+    }
+    // 64비트 부호 있는 10진 정수 (%lld)
+    else if (axlib_strcmp(format, "%lld") == 0)
+    {
+        int64_t n = va_arg(write_args, int64_t);
+        char write_number_buffer[24];
+        char write_output_buffer[24];
+        uint64_t write_magnitude = n < 0
+                                       ? (uint64_t)(-(n + 1)) + 1
+                                       : (uint64_t)n;
+        int write_number_length = 0;
+
+        do
+        {
+            write_number_buffer[write_number_length++] =
+                (char)(write_magnitude % 10) + '0';
+            write_magnitude /= 10;
+        } while (write_magnitude > 0);
+
+        int write_output_length = 0;
+        if (n < 0)
+        {
+            write_output_buffer[write_output_length++] = '-';
+        }
+        while (write_number_length > 0)
+        {
+            write_output_buffer[write_output_length++] =
+                write_number_buffer[--write_number_length];
+        }
+
+        axlib_write(fd, write_output_buffer, write_output_length);
+    }
+    // 64비트 부호 없는 10진 정수 (%llu)
+    else if (axlib_strcmp(format, "%llu") == 0)
+    {
+        uint64_t n = va_arg(write_args, uint64_t);
+        char write_number_buffer[24];
+        char write_output_buffer[24];
+        int write_number_length = 0;
+
+        do
+        {
+            write_number_buffer[write_number_length++] =
+                (char)(n % 10) + '0';
+            n /= 10;
+        } while (n > 0);
+
+        int write_output_length = 0;
+        while (write_number_length > 0)
+        {
+            write_output_buffer[write_output_length++] =
+                write_number_buffer[--write_number_length];
+        }
+
+        axlib_write(fd, write_output_buffer, write_output_length);
+    }
+    // 64비트 16진수 정수 (%llx)
+    else if (axlib_strcmp(format, "%llx") == 0)
+    {
+        uint64_t n = va_arg(write_args, uint64_t);
+        char write_number_buffer[16];
+        char write_output_buffer[16];
+        int write_number_length = 0;
+        const char write_hex_digits[] = "0123456789ABCDEF";
+
+        do
+        {
+            write_number_buffer[write_number_length++] =
+                write_hex_digits[n % 16];
+            n /= 16;
+        } while (n > 0);
+
+        int write_output_length = 0;
+        while (write_number_length > 0)
+        {
+            write_output_buffer[write_output_length++] =
+                write_number_buffer[--write_number_length];
+        }
+
+        axlib_write(fd, write_output_buffer, write_output_length);
+    }
+    // 포인터 주소 (%p)
+    else if (axlib_strcmp(format, "%p") == 0)
+    {
+        uintptr_t address = (uintptr_t)va_arg(write_args, void *);
+        char write_number_buffer[16];
+        char write_output_buffer[18];
+        int write_number_length = 0;
+        const char write_hex_digits[] = "0123456789abcdef";
+
+        do
+        {
+            write_number_buffer[write_number_length++] =
+                write_hex_digits[address % 16];
+            address /= 16;
+        } while (address > 0);
+
+        write_output_buffer[0] = '0';
+        write_output_buffer[1] = 'x';
+        int write_output_length = 2;
+        while (write_number_length > 0)
+        {
+            write_output_buffer[write_output_length++] =
+                write_number_buffer[--write_number_length];
+        }
+
+        axlib_write(fd, write_output_buffer, write_output_length);
     }
     // 문자열 (%s)
     else if (axlib_strcmp(format, "%s") == 0)
